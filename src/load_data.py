@@ -1,7 +1,6 @@
 import json
 import pandas as pd
 import numpy as np
-import os
 from pathlib import Path
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
