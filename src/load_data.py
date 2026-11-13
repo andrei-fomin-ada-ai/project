@@ -102,7 +102,9 @@ def save_data(df):
 if __name__ == '__main__':
     input_file = 'result.json'
 
-    raw_data = load_json(ROOT_DIR / 'data' / 'raw' / input_file)
+    raw_path = ROOT_DIR / 'data' / 'raw'
+    raw_path.mkdir(parents=True, exist_ok=True)
+    raw_data = load_json(raw_path / input_file)
     if raw_data:
         df_result = process_data(raw_data)
         if df_result is not None:
