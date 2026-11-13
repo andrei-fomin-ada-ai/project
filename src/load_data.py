@@ -1,12 +1,14 @@
 import json
 import pandas as pd
 import numpy as np
-import os
+from pathlib import Path
 
+ROOT_DIR = Path(__file__).resolve().parent.parent
 
 def load_json(file_path):
+    path = Path(file_path)
     try:
-        with open(file_path, 'r', encoding='utf-8') as file:
+        with path.open('r', encoding='utf-8') as file:
             return json.load(file)
     except FileNotFoundError:
         print(f'Ошибка: Файл {file_path} не найден.')
@@ -87,8 +89,11 @@ def save_data(df):
     if df is None or df.empty:
         print('Нет данных для сохранения.')
         return
-    os.makedirs('data', exist_ok=True)
-    file_path = 'data/processed.csv'
+    
+    data_dir = ROOT_DIR / 'data'
+    data_dir.mkdir(parents=True, exist_ok=True)
+    file_path = data_dir / 'processed.csv'
+
     df.to_csv(file_path, index=False, encoding='utf-8-sig')
     print(f'Данные сохранены в {file_path}')
 
@@ -96,7 +101,9 @@ def save_data(df):
 if __name__ == '__main__':
     input_file = 'result.json'
 
-    raw_data = load_json(input_file)
+    raw_path = ROOT_DIR / 'data' / 'raw'
+    raw_path.mkdir(parents=True, exist_ok=True)
+    raw_data = load_json(raw_path / input_file)
     if raw_data:
         df_result = process_data(raw_data)
         if df_result is not None:

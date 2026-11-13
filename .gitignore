@@ -1,2 +1,5 @@
 .venv/
 .idea/
+data/raw/*
+!data/raw/.gitkeep
+data/processed.csv
